@@ -1,0 +1,39 @@
+# Module Configuration
+module-config.json
+update-modulemanifests.ps1
+MODULE-MANAGEMENT.md
+
+# PowerShell specific
+*.ps1xml
+*.psc1
+*.psd1.backup
+*.psm1.backup
+
+# Build artifacts
+bin/
+obj/
+*.nupkg
+
+# IDE files
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+temp/

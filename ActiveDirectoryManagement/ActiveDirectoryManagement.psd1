@@ -1,19 +1,20 @@
 @{
     ModuleVersion = '1.0.0'
+    RequiredOSVersion = '10.0.0.0'
     GUID = '12345678-1234-1234-1234-123456789012'
-    Author = 'Your Organization'
-    CompanyName = 'Your Organization'
-    Copyright = '(c) 2024 Your Organization. All rights reserved.'
-    Description = 'Active Directory Management module for user and group operations'
+    Author = 'C. Miller'
+    CompanyName = '200rx'
+    Copyright = '(c) 2024 Corey Miller. All rights reserved.'
+    Description = 'PowerShell module for Active Directory management tasks'
     PowerShellVersion = '5.1'
     RequiredModules = @(
         @{
             ModuleName = 'Common'
-            ModuleVersion = '1.0.0'
+    ModuleVersion = '1.0.0'
         },
         @{
             ModuleName = 'ActiveDirectory'
-            ModuleVersion = '1.0.0.0'
+    ModuleVersion = '1.0.0'
         }
     )
     RequiredAssemblies = @()
@@ -21,7 +22,7 @@
     TypesToProcess = @()
     FormatsToProcess = @()
     NestedModules = @('ActiveDirectoryManagement.psm1')
-    FunctionsToExport = @(
+    FunctionsToExport = '@('Get-ADUserInfo', 'Set-ADUserPassword', 'New-ADUserAccount', 'Remove-ADUserAccount', 'Get-ADGroupMembers', 'Add-ADGroupMember', 'Remove-ADGroupMember')'
         'Get-ADUserAccountInfo',
         'Get-ADInactiveUsers',
         'Get-ADUserLoginStatus',
@@ -29,14 +30,14 @@
         'Get-ADPasswordStatus',
         'Get-ADGroupMembers'
     )
-    CmdletsToExport = @()
-    VariablesToExport = '*'
-    AliasesToExport = @()
-    PrivateData = @{
+    CmdletsToExport = '@()'
+    VariablesToExport = ''*''
+    AliasesToExport = '@()'
+    PrivateData = System.Collections.Hashtable
         PSData = @{
             Tags = @('ActiveDirectory', 'UserManagement', 'GroupManagement', 'Security')
-            ProjectUri = 'https://your-organization.com/ActiveDirectoryManagement'
-            LicenseUri = 'https://your-organization.com/license'
+    ProjectUri = 'https://github.com/404RX/PowerShell-System-Administration-Functions'
+    LicenseUri = 'https://github.com/404RX/PowerShell-System-Administration-Functions/blob/main/LICENSE'
             ReleaseNotes = @'
 Initial release of ActiveDirectoryManagement module with the following features:
 - User account management and reporting
@@ -64,5 +65,5 @@ Note: Some functions may require additional permissions or features depending on
         'ActiveDirectoryManagement.psm1',
         'README.md'
     )
-    HelpInfoURI = 'https://your-organization.com/ActiveDirectoryManagement/help'
+    HelpInfoURI = 'https://github.com/404RX/PowerShell-System-Administration-Functions/tree/main/ActiveDirectoryManagement#readme'
 } 

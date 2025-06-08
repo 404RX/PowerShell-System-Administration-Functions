@@ -1,13 +1,13 @@
 @{
     ModuleVersion = '1.0.0'
-    GUID = 'a1b2c3d4-e5f6-4a5b-8c7d-9e0f1a2b3c4d'
-    Author = 'System Administrator'
-    CompanyName = 'Organization'
-    Copyright = '(c) 2024 Organization. All rights reserved.'
-    Description = 'Provides functions for managing system information and monitoring'
+    GUID = '9aab6214-c579-422a-bbec-5d3a62e96685'
+    Author = 'C. Miller'
+    CompanyName = '200rx'
+    Copyright = '(c) 2024 Corey Miller. All rights reserved.'
+    Description = 'PowerShell module for gathering system information and hardware details'
     PowerShellVersion = '5.1'
     RequiredOSVersion = '10.0.0.0'
-    FunctionsToExport = @(
+    FunctionsToExport = '@('Get-SystemInfo', 'Get-HardwareInfo', 'Get-DiskInfo', 'Get-MemoryInfo', 'Get-ProcessorInfo', 'Get-NetworkInfo')'
         'Get-SystemInfo',
         'Get-MemoryUsage',
         'Get-CPUUsage',
@@ -15,14 +15,14 @@
         'Get-SystemVersion',
         'Get-DefenderStatus'
     )
-    CmdletsToExport = @()
-    VariablesToExport = '*'
-    AliasesToExport = @()
-    PrivateData = @{
+    CmdletsToExport = '@()'
+    VariablesToExport = ''*''
+    AliasesToExport = '@()'
+    PrivateData = System.Collections.Hashtable
         PSData = @{
             Tags = @('System', 'Information', 'Monitoring', 'Performance')
-            ProjectUri = ''
-            LicenseUri = ''
+    ProjectUri = 'https://github.com/404RX/PowerShell-System-Administration-Functions/blob/main/SystemInformation/README.md'
+    LicenseUri = 'https://github.com/404RX/PowerShell-System-Administration-Functions/blob/main/LICENSE'
             ReleaseNotes = 'Initial release'
         }
     }

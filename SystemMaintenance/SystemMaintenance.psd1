@@ -1,26 +1,26 @@
 @{
     ModuleVersion = '1.0.0'
-    GUID = 'a1b2c3d4-e5f6-4a5b-8c7d-9e0f1a2b3c4d'
-    Author = 'System Administrator'
-    CompanyName = 'Organization'
-    Copyright = '(c) 2024 Organization. All rights reserved.'
-    Description = 'Provides functions for system maintenance and optimization tasks.'
+    GUID = 'fa082b1c-6406-498b-a6e4-ba4ebf46adfe'
+    Author = 'C. Miller'
+    CompanyName = '200rx'
+    Copyright = '(c) 2024 Corey Miller. All rights reserved.'
+    Description = 'PowerShell module for system maintenance and cleanup tasks'
     PowerShellVersion = '5.1'
     RequiredOSVersion = '10.0.0.0'
     RequiredModules = @('Common')
-    FunctionsToExport = @(
+    FunctionsToExport = '@('Clear-TempFiles', 'Clear-RecycleBin', 'Optimize-SystemPerformance', 'Update-SystemDrivers', 'Repair-SystemFiles')'
         'Start-DiskCleanup',
         'Start-SystemFileCheck',
         'Start-SystemOptimization'
     )
-    CmdletsToExport = @()
-    VariablesToExport = '*'
-    AliasesToExport = @()
-    PrivateData = @{
+    CmdletsToExport = '@()'
+    VariablesToExport = ''*''
+    AliasesToExport = '@()'
+    PrivateData = System.Collections.Hashtable
         PSData = @{
             Tags = @('System', 'Maintenance', 'Optimization', 'Cleanup')
-            ProjectUri = 'https://github.com/organization/SystemMaintenance'
-            LicenseUri = 'https://github.com/organization/SystemMaintenance/blob/main/LICENSE'
+    ProjectUri = 'https://github.com/404RX/PowerShell-System-Administration-Functions/tree/main/SystemMaintenance#readme'
+    LicenseUri = 'https://github.com/404RX/PowerShell-System-Administration-Functions/blob/main/LICENSE'
             ReleaseNotes = 'Initial release of the SystemMaintenance module.'
         }
     }

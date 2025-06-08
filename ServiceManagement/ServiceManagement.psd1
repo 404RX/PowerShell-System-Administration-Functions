@@ -1,25 +1,26 @@
 @{
     ModuleVersion = '1.0.0'
-    GUID = '12345678-1234-1234-1234-123456789012'
-    Author = 'System Administrator'
-    CompanyName = 'Organization'
-    Copyright = '(c) 2024. All rights reserved.'
-    Description = 'Provides functions for managing Windows services'
+    RequiredOSVersion = '10.0.0.0'
+    GUID = '0a4bba5d-11b2-4537-895a-3f2166888881'
+    Author = 'C. Miller'
+    CompanyName = '200rx'
+    Copyright = '(c) 2024 Corey Miller. All rights reserved.'
+    Description = 'PowerShell module for Windows service management and monitoring'
     PowerShellVersion = '5.1'
-    FunctionsToExport = @(
+    FunctionsToExport = '@('Get-ServiceStatus', 'Start-ServiceSafe', 'Stop-ServiceSafe', 'Restart-ServiceSafe', 'Set-ServiceStartupType', 'Get-ServiceDependencies')'
         'Get-ServicePendingStatus',
         'Stop-PendingServices',
         'Restart-WMIService',
         'Get-ServiceList'
     )
-    CmdletsToExport = @()
-    VariablesToExport = '*'
-    AliasesToExport = @()
-    PrivateData = @{
+    CmdletsToExport = '@()'
+    VariablesToExport = ''*''
+    AliasesToExport = '@()'
+    PrivateData = System.Collections.Hashtable
         PSData = @{
             Tags = @('Services', 'Windows', 'Management')
-            ProjectUri = ''
-            LicenseUri = ''
+    ProjectUri = 'https://github.com/404RX/PowerShell-System-Administration-Functions/blob/main/ServiceManagement/README.md'
+    LicenseUri = 'https://github.com/404RX/PowerShell-System-Administration-Functions/blob/main/LICENSE'
         }
     }
 } 
