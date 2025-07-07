@@ -27,9 +27,9 @@ function Write-LogMessage {
     
     # Also write to console with appropriate color
     switch ($Level) {
-        'Info'    { Write-Host $logMessage -ForegroundColor White }
-        'Warning' { Write-Host $logMessage -ForegroundColor Yellow }
-        'Error'   { Write-Host $logMessage -ForegroundColor Red }
+        'Info'    { Write-Information $logMessage -InformationAction Continue }
+        'Warning' { Write-Warning $logMessage }
+        'Error'   { Write-Error $logMessage }
     }
 }
 
@@ -38,7 +38,7 @@ function Test-Administrator {
     return $currentUser.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 }
 
-function Get-ErrorDetails {
+function Get-ErrorDetail {
     param(
         [Parameter(Mandatory=$true)]
         [System.Management.Automation.ErrorRecord]$ErrorRecord
@@ -146,7 +146,7 @@ function Test-OSVersion {
         return $compatibility
         
     } catch {
-        $errorDetails = Get-ErrorDetails -ErrorRecord $_
+        $errorDetails = Get-ErrorDetail -ErrorRecord $_
         Write-LogMessage -Message "Failed to check OS version: $($errorDetails.ExceptionMessage)" -Level Error
         throw
     }
@@ -217,7 +217,7 @@ function Test-ModuleCompatibility {
         return $compatibility
         
     } catch {
-        $errorDetails = Get-ErrorDetails -ErrorRecord $_
+        $errorDetails = Get-ErrorDetail -ErrorRecord $_
         Write-LogMessage -Message "Failed to check module compatibility: $($errorDetails.ExceptionMessage)" -Level Error
         throw
     }

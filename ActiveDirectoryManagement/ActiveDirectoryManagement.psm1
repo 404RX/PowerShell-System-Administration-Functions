@@ -41,7 +41,7 @@ function Test-ADFunctionCompatibility {
         return $compatibility.IsCompatible
         
     } catch {
-        $errorDetails = Get-ErrorDetails -ErrorRecord $_
+        $errorDetails = Get-ErrorDetail -ErrorRecord $_
         Write-LogMessage -Message "Failed to check function compatibility: $($errorDetails.ExceptionMessage)" -Level Error
         throw
     }
@@ -132,7 +132,7 @@ function Get-ADUserAccountInfo {
         return $results | Sort-Object -Property Name
         
     } catch {
-        $errorDetails = Get-ErrorDetails -ErrorRecord $_
+        $errorDetails = Get-ErrorDetail -ErrorRecord $_
         Write-LogMessage -Message "Failed to retrieve user account information: $($errorDetails.ExceptionMessage)" -Level Error
         throw
     }
@@ -221,7 +221,7 @@ function Get-ADInactiveUsers {
         return $results | Sort-Object -Property DaysInactive -Descending
         
     } catch {
-        $errorDetails = Get-ErrorDetails -ErrorRecord $_
+        $errorDetails = Get-ErrorDetail -ErrorRecord $_
         Write-LogMessage -Message "Failed to retrieve inactive users: $($errorDetails.ExceptionMessage)" -Level Error
         throw
     }
@@ -292,9 +292,9 @@ function Get-ADUserLoginStatus {
             if ($Detailed -and $ComputerName) {
                 foreach ($computer in $ComputerName) {
                     try {
-                        $sessions = Get-WmiObject -Class Win32_LogonSession -ComputerName $computer -ErrorAction Stop
+                        $sessions = Get-CimInstance -ClassName Win32_LogonSession -ComputerName $computer -ErrorAction Stop
                         $userSessions = $sessions | Where-Object { $_.LogonType -in (2, 10) } | ForEach-Object {
-                            Get-WmiObject -Class Win32_LoggedOnUser -ComputerName $computer | 
+                            Get-CimInstance -ClassName Win32_LoggedOnUser -ComputerName $computer | 
                             Where-Object { $_.Antecedent -like "*$($user.SamAccountName)*" }
                         }
                         
@@ -320,7 +320,7 @@ function Get-ADUserLoginStatus {
         return $results | Sort-Object -Property LastLogonDate -Descending
         
     } catch {
-        $errorDetails = Get-ErrorDetails -ErrorRecord $_
+        $errorDetails = Get-ErrorDetail -ErrorRecord $_
         Write-LogMessage -Message "Failed to retrieve user login status: $($errorDetails.ExceptionMessage)" -Level Error
         throw
     }
@@ -414,7 +414,7 @@ function Get-ADLockedOutUsers {
         return $results | Sort-Object -Property LockoutTime -Descending
         
     } catch {
-        $errorDetails = Get-ErrorDetails -ErrorRecord $_
+        $errorDetails = Get-ErrorDetail -ErrorRecord $_
         Write-LogMessage -Message "Failed to retrieve locked out users: $($errorDetails.ExceptionMessage)" -Level Error
         throw
     }
@@ -524,7 +524,7 @@ function Get-ADPasswordStatus {
         return $results | Sort-Object -Property PasswordLastSet -Descending
         
     } catch {
-        $errorDetails = Get-ErrorDetails -ErrorRecord $_
+        $errorDetails = Get-ErrorDetail -ErrorRecord $_
         Write-LogMessage -Message "Failed to retrieve password status: $($errorDetails.ExceptionMessage)" -Level Error
         throw
     }
@@ -614,7 +614,7 @@ function Get-ADGroupMembers {
         return $results | Sort-Object -Property ObjectClass, Name
         
     } catch {
-        $errorDetails = Get-ErrorDetails -ErrorRecord $_
+        $errorDetails = Get-ErrorDetail -ErrorRecord $_
         Write-LogMessage -Message "Failed to retrieve group members: $($errorDetails.ExceptionMessage)" -Level Error
         throw
     }
@@ -713,7 +713,7 @@ function Get-ADComputersInOU {
         return $results | Sort-Object -Property LastLogonDate -Descending
         
     } catch {
-        $errorDetails = Get-ErrorDetails -ErrorRecord $_
+        $errorDetails = Get-ErrorDetail -ErrorRecord $_
         Write-LogMessage -Message "Failed to retrieve computers: $($errorDetails.ExceptionMessage)" -Level Error
         throw
     }
@@ -800,7 +800,7 @@ function Get-ADDeletedObjects {
         return $results | Sort-Object -Property DeletedDate -Descending
         
     } catch {
-        $errorDetails = Get-ErrorDetails -ErrorRecord $_
+        $errorDetails = Get-ErrorDetail -ErrorRecord $_
         Write-LogMessage -Message "Failed to retrieve deleted objects: $($errorDetails.ExceptionMessage)" -Level Error
         throw
     }
@@ -888,7 +888,7 @@ function Set-ADUserPassword {
         }
         
     } catch {
-        $errorDetails = Get-ErrorDetails -ErrorRecord $_
+        $errorDetails = Get-ErrorDetail -ErrorRecord $_
         Write-LogMessage -Message "Failed to set password: $($errorDetails.ExceptionMessage)" -Level Error
         throw
     }
@@ -944,20 +944,20 @@ function Get-ADUserLoginHistory {
                     $_.Properties[5].Value -eq $user.SamAccountName
                 }
                 
-                foreach ($event in $events) {
+                foreach ($eventObj in $events) {
                     $loginInfo = @{
-                        Time = $event.TimeCreated
+                        Time = $eventObj.TimeCreated
                         DomainController = $dc.HostName
                         User = $user.SamAccountName
-                        LogonType = $event.Properties[10].Value
-                        Workstation = $event.Properties[13].Value
-                        IPAddress = $event.Properties[18].Value
+                        LogonType = $eventObj.Properties[10].Value
+                        Workstation = $eventObj.Properties[13].Value
+                        IPAddress = $eventObj.Properties[18].Value
                     }
                     
                     if ($Detailed) {
-                        $loginInfo.Add('ProcessName', $event.Properties[9].Value)
-                        $loginInfo.Add('AuthenticationPackage', $event.Properties[10].Value)
-                        $loginInfo.Add('FailureReason', $event.Properties[8].Value)
+                        $loginInfo.Add('ProcessName', $eventObj.Properties[9].Value)
+                        $loginInfo.Add('AuthenticationPackage', $eventObj.Properties[10].Value)
+                        $loginInfo.Add('FailureReason', $eventObj.Properties[8].Value)
                     }
                     
                     $results += [PSCustomObject]$loginInfo
@@ -976,7 +976,7 @@ function Get-ADUserLoginHistory {
         return $results | Sort-Object -Property Time -Descending
         
     } catch {
-        $errorDetails = Get-ErrorDetails -ErrorRecord $_
+        $errorDetails = Get-ErrorDetail -ErrorRecord $_
         Write-LogMessage -Message "Failed to retrieve login history: $($errorDetails.ExceptionMessage)" -Level Error
         throw
     }
@@ -1054,7 +1054,7 @@ function Get-ADUserSID {
         return $output
         
     } catch {
-        $errorDetails = Get-ErrorDetails -ErrorRecord $_
+        $errorDetails = Get-ErrorDetail -ErrorRecord $_
         Write-LogMessage -Message "Failed to retrieve SID information: $($errorDetails.ExceptionMessage)" -Level Error
         throw
     }
@@ -1113,7 +1113,7 @@ function Set-ADComputerDescription {
         }
         
     } catch {
-        $errorDetails = Get-ErrorDetails -ErrorRecord $_
+        $errorDetails = Get-ErrorDetail -ErrorRecord $_
         Write-LogMessage -Message "Failed to set computer description: $($errorDetails.ExceptionMessage)" -Level Error
         throw
     }
@@ -1184,13 +1184,13 @@ function Get-ADPDCStatus {
                 
                 $events = Get-WinEvent -ComputerName $pdc.HostName -FilterHashtable $filter -ErrorAction Stop
                 
-                foreach ($event in $events) {
+                foreach ($eventObj in $events) {
                     $status.Events += [PSCustomObject]@{
-                        Time = $event.TimeCreated
-                        ID = $event.Id
-                        Level = $event.LevelDisplayName
-                        Source = $event.ProviderName
-                        Message = $event.Message
+                        Time = $eventObj.TimeCreated
+                        ID = $eventObj.Id
+                        Level = $eventObj.LevelDisplayName
+                        Source = $eventObj.ProviderName
+                        Message = $eventObj.Message
                     }
                 }
             } catch {
@@ -1209,7 +1209,7 @@ function Get-ADPDCStatus {
         return $result
         
     } catch {
-        $errorDetails = Get-ErrorDetails -ErrorRecord $_
+        $errorDetails = Get-ErrorDetail -ErrorRecord $_
         Write-LogMessage -Message "Failed to retrieve PDC status: $($errorDetails.ExceptionMessage)" -Level Error
         throw
     }
@@ -1289,7 +1289,7 @@ function Get-ADUserLastLogon {
         return $output
         
     } catch {
-        $errorDetails = Get-ErrorDetails -ErrorRecord $_
+        $errorDetails = Get-ErrorDetail -ErrorRecord $_
         Write-LogMessage -Message "Failed to retrieve last logon information: $($errorDetails.ExceptionMessage)" -Level Error
         throw
     }

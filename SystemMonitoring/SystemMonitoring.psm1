@@ -102,7 +102,7 @@ function Get-SystemPerformance {
         return [PSCustomObject]$result
         
     } catch {
-        $errorDetails = Get-ErrorDetails -ErrorRecord $_
+        $errorDetails = Get-ErrorDetail -ErrorRecord $_
         Write-LogMessage -Message "Failed to retrieve system performance: $($errorDetails.ExceptionMessage)" -Level Error
         throw
     }
@@ -273,7 +273,7 @@ function Get-SystemServices {
         return $results
         
     } catch {
-        $errorDetails = Get-ErrorDetails -ErrorRecord $_
+        $errorDetails = Get-ErrorDetail -ErrorRecord $_
         Write-LogMessage -Message "Failed to retrieve system services: $($errorDetails.ExceptionMessage)" -Level Error
         throw
     }
